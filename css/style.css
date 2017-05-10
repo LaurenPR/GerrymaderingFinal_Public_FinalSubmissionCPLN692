@@ -1,0 +1,210 @@
+/*main elements*/
+body {
+    padding: 0;
+    font-family: helvetica, arial, sans-serif;
+    overflow: hidden;
+}
+
+.header {
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
+  color: #fff;
+  position: absolute;
+  top: 0;
+}
+
+.map {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 50px;
+}
+
+
+/*styling buttons*/   /* aqua #4abdac larger aqua #163c36*/
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary {
+    background: #4abdac;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #163c36;
+}
+
+.btn-primary:active, .btn-primary.active {
+    background: #007299;
+    box-shadow: none;
+}
+
+
+/*objects in header*/
+#districtContainer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 3000;
+  padding: 0px;
+}
+
+#districtlevel_buttons {
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  z-index: 2000;
+  height: 30px;
+  padding: 15px 10px 0px;
+}
+
+
+/* objects over the map*/
+
+
+#address_submit {
+  position: absolute;
+  z-index: 2000;
+  width: 220px;
+  height: 50px;
+  top: 55px ;
+  left: 5px;
+  padding: 0;
+  opacity: 1;
+}
+
+#address {
+  position: relative;
+  bottom: 0;
+  /*top: 55px ;*/
+  left: 40px ;
+  z-index: 3000;
+  padding: 5px;
+}
+
+#calculate {
+  position: relative;
+  bottom: 0;
+  /*top: 55px ;*/
+  left: 45px ;
+  z-index: 3000;
+  padding: 5px;
+}
+
+
+#timelineContainer {
+  position: absolute;
+  bottom: 5px;
+  left: 70px;
+  z-index: 3000;
+  height: 30px;
+}
+
+#timeline {
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  z-index: 2000;
+  height: 30px;
+}
+
+.legendDIV_background {
+  position: absolute;
+  z-index: 2000;
+  width: 220px;
+  height: 220px;
+  bottom: 20px;
+  right: 5px;
+  padding: 0;
+  background-color: #fff;
+  opacity: 0.4;
+  border-radius:5%
+}
+
+.legendDIV {
+  position: absolute;
+  z-index: 2000;
+  width: 220px;
+  height: 220px;
+  bottom: 20px;
+  right: 5px;
+  padding: 0;
+  opacity: 1;
+}
+
+.legend {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+}
+
+.legend li {
+  font-size: 80%;
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 6px;
+  padding: 5px;
+}
+
+.legend span {
+  display:block;
+  height: 20px;
+  float: left;
+  width: 20px;
+  margin: 0 7px;
+  border-radius:50% /*becomes a circle*/
+}
+
+
+.legend_special {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+}
+
+.legend_special li {
+  display: block;
+  float: left;
+  width: 30px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 80%;
+  list-style: none;
+}
+
+.legend_special span {
+  display: block;
+  float: left;
+  height: 15px;
+  width: 30px;
+}
+ /*Reference for legends: https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/ via Casey Ross*/
+
+#changeCSS {
+  font-size: 80%;
+  color: #163c36;
+}
+
+.radioContainer{
+  position: relative;
+  left: 0;
+  padding: 5px;
+}
+
+
+hr {
+	background:none;
+	clear:both;
+	float:none;
+	width:100%;
+	height:1px;
+	border:none;
+	margin:-1px 0;
+}

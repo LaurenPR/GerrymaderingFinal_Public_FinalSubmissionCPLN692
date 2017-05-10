@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- CSS Imports -->
+    <meta charset=utf-8>
+    <!-- <meta name=viewport content="width=device-width, initial-scale=1.0"> -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+  </head>
+  <body>
+
+    <!-- Global Variables to Store Information -->
+    <input id="lat" type="hidden">
+    <input id="lng" type="hidden">
+
+    <!-- District Type - Congressional, Upper House, Lower House2 -->
+    <div class="header">
+      <!-- <div class="districtContainerDIV_background">
+      </div> -->
+      <div class="districtContainer">
+        <div class="btn-group" id="districtlevel_buttons">
+          <button type="button" id="Congressional" class="btn btn-primary">Congressional Districts</button>
+          <button type="button" id="Upper_House" class="btn btn-primary">State Senate Districts</button>
+          <button type="button" id="Lower_House" class="btn btn-primary">State House Districts</button>
+        </div>
+      </div>
+    </div>
+
+      <!-- Address & Submit Button-->
+    <div class="container" id="address_submit">
+      <input id="address" type="text"
+              placeholder="Enter Your Address">
+      <button id="calculate" disabled>Plot</button>
+    </div>
+
+    <!-- Map -->
+    <div id="map" class="map"></div>
+
+    <!--Timeline-->
+    <div class="container" id="timelineContainer">
+      <div class="btn-group" id="timeline_buttons">
+        <button type="button" id="2001" class="btn btn-primary">2001</button>
+        <button type="button" id="2012" class="btn btn-primary">2012</button>
+      </div>
+    </div>
+
+    <!-- Legends -->
+    <div class="legendDIV_background">
+    </div>
+    <div class="legendDIV">
+      <h3 id="datasetName"></h3>
+      <ul class="legend" id="legend_districts">
+        <li><span style='background-color:#e1aa28;'></span>District Boundaries</li>
+      </ul>
+
+      <ul class="legend" id="legend_Party" style="display: none;">
+        <li><span style="background-color:#374C70;" > </span>Democrate</li>
+        <li><span style="background-color:#9D1309;" > </span>Republican</li>
+      </ul>
+
+      <ul class="legend_special" id="legend_fillerVariable" style="display: none;">
+        <li><span style='background-color:#ffffd4;'></span>Least</li>
+        <li><span style="background-color:#fed98e;"> </span></li>
+        <li><span style="background-color:#fe9929;"> </span>Some</li>
+        <li><span style="background-color:#d95f0e;"> </span></li>
+        <li><span style="background-color:#993404;"> </span>Most</li>
+      </ul>
+
+      <!-- Radio Buttons in Legend - Gerrymandering CSS Code -->
+      <!-- <br> -->
+      <hr>
+      <div class= "container" id="radioContainer">
+        <input type = "radio" class = "radioButton_Gerrymandering" id = "party" name = "gerrymandering" value = "party"> Winning Party<br>
+        <input type = "radio" class = "radioButton_Gerrymandering" id = "gerrymanderingFillerVariable" name = "gerrymandering" value = "gerrymanderingFillerVariable"> Filler Variable<br>
+      </div>
+      <h8 style="font-size: 60%">   Note: Values unavailable for 2011 Congressional Districts</h3>
+     </div>
+
+
+    <!-- Javascript Imports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+    <!-- <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
