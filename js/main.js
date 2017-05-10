@@ -104,13 +104,6 @@ var userCurrentState = {
 var helperSQL = "SELECT * FROM" + " ";
 
 var sql_Call_Function = function(sqlCall) { //, dataNameforLater
-  console.log("sqlCall variable in function", sqlCall);
-  // console.log("dataNameforLater variable in function", dataNameforLater);
-  console.log("what will be the sql call in function", helperSQL + sqlCall);
-  console.log("sql_Code_Layer", sql_Code_Layer);
-  // removing existing map layers
-  // if (sql_Code_Layer) {map.removeLayer(sql_Code_Layer);} else {} //any layers created through the same sql function
-  // if (initialSelectedData) {map.removeLayer(initialSelectedData);} else {}// any layers created by the initial call
 
 if (globalLayerValue) {map.removeLayer(globalLayerValue);} else {}// any layers created by the initial call
 
@@ -134,8 +127,6 @@ if (globalLayerValue) {map.removeLayer(globalLayerValue);} else {}// any layers 
     console.log("errors:" + errors);
   })
   .addTo(map);
-
-  console.log("new sql query", sql_Code_Layer);
   return sql_Code_Layer;
 };
 
@@ -157,9 +148,6 @@ var filterFunction_MarkerZoom = function(){
     // query the current userState
     var sql_variables = findingSQL_DistrictYear(userCurrentState);
     console.log("sql_variables from marker", sql_variables);
-
-    // console.log("sql_variables from marker - dataName", sql_variables.dataName);
-    // var dataname_currentlayer = sql_variables.dataName;
 
     visibleLayer = globalLayerValue.getSubLayer(0);
     console.log("visble layer", visibleLayer);
@@ -211,18 +199,15 @@ var findingSQL_CSSColor = function(radioID) {
   }
   //more values would be added here if I had actually finished the gerrymandering analysis
   else {console.log("This variable cannot be displayed");}
-  console.log("sql output from sql if else statement", sql_calls );
   return sql_calls;
 };
 
 var function_updateCSS = function(specificCSS){
 
     visibleLayer = globalLayerValue.getSubLayer(0);
-    console.log("visible layer", visibleLayer);
 
     // update the Carto css
     visibleLayer.setCartoCSS("#layer { polygon-fill:" + specificCSS + "); line-width: 1; line-color: #FFF; line-opacity: 0.5; }" );
-    console.log("changed css with radio button");
 
 };
 
@@ -253,7 +238,6 @@ var initialSQL = cartodb.createLayer(map, {
   .done(function(data) {
     console.log("this comes from the initial SQL Call", data);
     globalLayerValue = data;
-    console.log("data as iniitally called", data);
   })
   .error(function(errors) {
     // errors contains a list of errors
@@ -290,25 +274,19 @@ var initialSQL = cartodb.createLayer(map, {
   // var drawnLayerID;
   map.addControl(drawControl);
   map.on('draw:created', function (e) {
-    console.log("dropMarkerExists BEFORE", dropMarkerExists);
     if (addressMarkerExists === true){map.removeLayer(marker);} else {} //removes any existing points created by address geolocation
 
     var type = e.layerType;
     var layer = e.layer;
-    // console.log('draw created:', e);
 
     if (type === 'marker') {
       $('#lat').val(layer._latlng.lat);
       $('#lng').val(layer._latlng.lng);
-      // console.log(layer._latlng.lat);
-      // console.log(layer._latlng.lng);
-
     }
 
     // I prefer map.flyTo but this does not appear to be supported with carto in this iteration (planned adition from what I was reading)
     map.panTo(new L.LatLng(layer._latlng.lat, layer._latlng.lng));
     dropMarkerExists = true;
-    console.log("dropMarkerExists AFTER", dropMarkerExists);
     filterFunction_MarkerZoom();
 
 
@@ -340,22 +318,15 @@ var initialSQL = cartodb.createLayer(map, {
   // click handler for the "calculate" button
   $("#calculate").click(function(e) {
     var address = $('#address').val();
-    console.log(address);
-
     // $.ajax("https://search.mapzen.com/v1/search?api_key=mapzen-wQZCNQv&text="+address+"&focus.point.lat=39.952583&focus.point.lon=-75.1652&boundary.country= USA").done(
     $.ajax("http://search.mapzen.com/v1/search?api_key=mapzen-wQZCNQv&text="+address+"&focus.point.lat=39.952583&focus.point.lon=-75.1652&size=1").done(
       function(mapInfoforAddress) {
-        console.log("map info from ajax", mapInfoforAddress);
         var userPoint = mapInfoforAddress.features[0].geometry; // returns the first point on the list of potential answers
 
         // Cleaning up any existing markers
         // if (typeof(marker)!=='undefined'){map.removeLayer(marker);} else {} //removes any existing points created by address geolocation
         if (addressMarkerExists === true){map.removeLayer(marker);} else {} //removes any existing points created by address geolocation
         if (dropMarkerExists === true) {map.removeLayer(map._layers[drawnLayerID]);} else {} // removes any points created by dragging over a marker
-
-// THERE IS AN ERROR THAT ARISES WHEN YOU CREATE A DRAG, THEN ADDRESS MARKER, THEN DRAG MARKER AGAIN
-// (WON'T GO BACK TO ADDRESS MARKER), IT GIVES THIS ERROR:
-// "cartodb.js:7 Uncaught TypeError: Cannot read property '_leaflet_id' of undefined"
 
         // creating a new marker & setting global marker variable to true
         marker = L.marker([userPoint.coordinates[1] , userPoint.coordinates[0]]).addTo(map);
@@ -381,25 +352,18 @@ var initialSQL = cartodb.createLayer(map, {
     $("#timeline_buttons").on('click', function () {
     // note: .on('click') seems to work better than .click for the timeline buttons, not sure why...
     // $("#timeline_buttons").click(function() {
-      console.log("button clicked!");
-      console.log("before timeline click", userCurrentState);
+   
       // first find which button was clicked
       var clickedBtGroup_timeline = $('timeline_buttons').each(function(){
           $(this);
       });
-      console.log("clickedBtGroup_timeline", clickedBtGroup_timeline);
       activeTimelineButton = clickedBtGroup_timeline.context.activeElement.id;
-      console.log("activeTimelineButton", activeTimelineButton);
 
       // then update global relevant variable(s) (userState)
       userCurrentState.yearCalled = activeTimelineButton;
-      console.log("after timeline click", userCurrentState);
 
       // second, evoke carto SQL based on filter parameters
       var sql_variables = findingSQL_DistrictYear(userCurrentState);
-      console.log("sql_variables from timeline", sql_variables);
-      console.log("sql_variables from timeline - sql_from", sql_variables.sql_from);
-      console.log("sql_variables from timeline - sqdataNamel_from", sql_variables.dataName);
       sql_Call_Function(sql_variables.sql_from);
 
       // finally update name of dataset in view
@@ -412,29 +376,19 @@ var initialSQL = cartodb.createLayer(map, {
 
 
     var activeDistrictButton;
-
-    console.log("1st call activeDistrictButton", activeDistrictButton);
-    console.log("before district click", userCurrentState);
-
     $("#districtlevel_buttons").click(function() {
       // first find which button was clicked
       var clickedBtGroup_district = $('radioButtons').each(function(){
           $(this);  //.context.activeElement.id
       });
-      console.log("districtlevel_buttons", clickedBtGroup_district);
       activeDistrictButton = clickedBtGroup_district.context.activeElement.id;
-      console.log("activeDistrictButton", activeDistrictButton);
 
       // then update global relevant variable(s) (userState)
       userCurrentState.districtLevelCalled = activeDistrictButton;
-      console.log("after district click", userCurrentState);
 
 
       // second, evoke carto SQL based on filter parameters
       var sql_variables = findingSQL_DistrictYear(userCurrentState);
-      console.log("sql_variables from district", sql_variables);
-      console.log("sql_variables from district - sql_from", sql_variables.sql_from);
-      console.log("sql_variables from district - sqdataNamel_from", sql_variables.dataName);
       sql_Call_Function(sql_variables.sql_from);
 
       // finally update name of dataset in view
@@ -451,15 +405,10 @@ var initialSQL = cartodb.createLayer(map, {
     ////////////////////////////////////////////////////////////////////
 
     $("input[name='gerrymandering']").change(function(){
-      console.log("something happened");
       selectedRadioButton = $('input[name=gerrymandering]:checked').val();
-      console.log("radio button was clicked - version 1", selectedRadioButton);
 
       var newCSS = findingSQL_CSSColor(selectedRadioButton);
-      console.log("potentially new css", newCSS.columnColorCSS);
       function_updateCSS(newCSS.columnColorCSS);
-      console.log("did this function run??");
-
       showingCorrectLegend();
     });
 
